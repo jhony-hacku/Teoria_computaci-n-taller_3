@@ -1,0 +1,99 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html><head></head><body>
+
+
+  
+  
+  
+  
+
+
+<div class="container">
+  <div class="header">
+    <h1>Gesti&#243;n de Notas</h1>
+    <p>Administra las calificaciones del estudiante</p>
+  </div>
+
+  <div class="content">
+    <div></div>
+
+    Agregar Nota
+
+    <div class="nota-form">
+      <h2>Agregar Nota</h2>
+      
+        
+        <div class="form-group">
+          <label>Materia:</label>
+          
+        </div>
+        <div class="form-group">
+          <label>Observaci&#243;n:</label>
+          
+        </div>
+        <div class="form-group">
+          <label>Nota (0-5):</label>
+          
+        </div>
+        <div class="form-group">
+          <label>Porcentaje (0-100):</label>
+          
+        </div>
+        Guardar
+        Cancelar
+      
+    </div>
+
+    <h3>Lista de Notas</h3>
+    <table class="table">
+      <thead>
+      <tr>
+        <th>ID</th>
+        <th>Materia</th>
+        <th>Observaci&#243;n</th>
+        <th>Nota</th>
+        <th>Porcentaje</th>
+        <th>Contribuci&#243;n</th>
+        <th>Acciones</th>
+      </tr>
+      </thead>
+      <tbody>
+      </tbody>
+    </table>
+
+    <div class="resumen"></div>
+  </div>
+</div>
+
+<div class="modal">
+  <div class="modal-content">
+    <span class="close">&#215;</span>
+    <div></div>
+  </div>
+</div>
+
+
+
+<script type="module" src="https://s.brightspace.com/lib/bsi/2026.4.226/unbundled/mathjax.js"></script><script type="text/javascript">document.addEventListener('DOMContentLoaded', function() {
+					if (document.querySelector('math, .d2l-element, .d2l-cplus-layout') || /\$\$|\\\(|\\\[|\\begin{|\\ref{|\\eqref{/.test(document.body.innerHTML)) {
+						document.querySelectorAll('mspace[linebreak="newline"]').forEach(elm => {
+							elm.setAttribute('style', 'display: block; height: 0.5rem;');
+						});
+
+						document.querySelectorAll('math mmultiscripts > none').forEach(elm => {
+							const mrow = document.createElementNS('http://www.w3.org/1998/Math/MathML', 'mrow');
+							elm.replaceWith(mrow);
+						});
+
+						window.D2L.MathJax.loadMathJax({
+							outputScale: 1.5,
+							renderLatex: false,
+							enableMML3Support: false
+						});
+					}
+				});</script><script type="module" src="https://s.brightspace.com/lib/bsi/2026.4.226/unbundled/prism.js"></script><script type="text/javascript">document.addEventListener('DOMContentLoaded', function() {
+					document.querySelectorAll('.d2l-code').forEach(code => {
+						window.D2L.Prism.formatCodeElement(code, true);
+					});
+				});</script><script type="module" src="https://s.brightspace.com/lib/bsi/2026.4.226/unbundled/embeds.js"></script><script type="text/javascript">document.addEventListener('DOMContentLoaded', function() {
+					window.D2L.EmbedRenderer.renderEmbeds(document.body);
+				});</script></body></html>
