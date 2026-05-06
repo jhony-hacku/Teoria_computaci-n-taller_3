@@ -10,9 +10,9 @@ import lombok.Data;
 public class NotaDTO {
 
     private Long id;
+    private Long estudianteId;
     @NotBlank(message = "La materia es obligatoria")
     private String materia;
-    @NotBlank (message = "La observacion es obligatoria")
     private String observacion;
     @NotNull (message = "El valor es obligatorio")
     @Min(value = 0, message = "El valor debe ser mayor o igual a 0")

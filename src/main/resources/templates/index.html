@@ -1,90 +1,311 @@
-﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html><head></head><body>
+<!DOCTYPE html>
+<html lang="es">
 
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Gestión de Estudiantes</title>
+    <meta name="description" content="Gestión de estudiantes y sus calificaciones">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
 
-  
-  
-  
-  
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f6f8;
+            color: #333;
+        }
 
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 20px;
+        }
 
-<div class="container">
-  <div class="header">
-    <h1>Sistema de Gesti&#243;n de Estudiantes</h1>
-    <p>Gesti&#243;n de estudiantes y sus calificaciones</p>
-  </div>
+        .header {
+            background: #2c3e50;
+            color: white;
+            padding: 20px 30px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
 
-  <div class="content">
-    Nuevo Estudiante
+        .header h1 {
+            font-size: 1.8rem;
+        }
 
-    <div class="estudiante-form">
-      <h2>Crear Estudiante</h2>
-      
-        
-        <div class="form-group">
-          <label>Nombre:</label>
-          
+        .header p {
+            margin-top: 5px;
+            opacity: 0.8;
+        }
+
+        .content {
+            background: white;
+            border-radius: 8px;
+            padding: 25px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .btn-primary {
+            background: #3498db;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #2980b9;
+        }
+
+        .btn-edit {
+            background: #f39c12;
+            color: white;
+            margin-right: 4px;
+        }
+
+        .btn-edit:hover {
+            background: #e67e22;
+        }
+
+        .btn-delete {
+            background: #e74c3c;
+            color: white;
+            margin-right: 4px;
+        }
+
+        .btn-delete:hover {
+            background: #c0392b;
+        }
+
+        .btn-notas {
+            background: #27ae60;
+            color: white;
+            margin-right: 4px;
+        }
+
+        .btn-notas:hover {
+            background: #1e8449;
+        }
+
+        .btn-calcular {
+            background: #8e44ad;
+            color: white;
+        }
+
+        .btn-calcular:hover {
+            background: #7d3c98;
+        }
+
+        .btn-cancel {
+            background: #95a5a6;
+            color: white;
+            margin-left: 8px;
+        }
+
+        .btn-cancel:hover {
+            background: #7f8c8d;
+        }
+
+        /* Form */
+        .estudiante-form {
+            display: none;
+            background: #ecf0f1;
+            border-radius: 6px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .estudiante-form.active {
+            display: block;
+        }
+
+        .estudiante-form h2 {
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+        }
+
+        .form-group {
+            margin-bottom: 12px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 4px;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+
+        .form-actions {
+            margin-top: 15px;
+        }
+
+        /* Table */
+        h2.section-title {
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+        }
+
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        .table th,
+        .table td {
+            padding: 10px 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+            font-size: 14px;
+        }
+
+        .table th {
+            background: #2c3e50;
+            color: white;
+        }
+
+        .table tr:hover {
+            background: #f9f9f9;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 4px;
+            flex-wrap: wrap;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal.show {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 8px;
+            padding: 30px;
+            max-width: 400px;
+            width: 90%;
+            text-align: center;
+        }
+
+        .modal-content h2 {
+            margin-bottom: 15px;
+        }
+
+        .close {
+            float: right;
+            cursor: pointer;
+            font-size: 1.5rem;
+            line-height: 1;
+            color: #666;
+        }
+
+        .close:hover {
+            color: #000;
+        }
+
+        .top-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <div class="header">
+            <h1>Sistema de Gestión de Estudiantes</h1>
+            <p>Gestión de estudiantes y sus calificaciones</p>
         </div>
-        <div class="form-group">
-          <label>Apellido:</label>
-          
+
+        <div class="content">
+            <!-- Botón para abrir formulario -->
+            <div class="top-actions">
+                <h2 class="section-title">Lista de Estudiantes</h2>
+                <button id="btnNuevoEstudiante" class="btn btn-primary" onclick="showForm()">+ Nuevo Estudiante</button>
+            </div>
+
+            <!-- Formulario crear/editar -->
+            <div id="estudianteForm" class="estudiante-form">
+                <h2 id="formTitle">Crear Estudiante</h2>
+                <form id="form">
+                    <input type="hidden" id="estudianteId">
+                    <div class="form-group">
+                        <label for="nombre">Nombre:</label>
+                        <input type="text" id="nombre" name="nombre" placeholder="Nombre del estudiante" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="apellido">Apellido:</label>
+                        <input type="text" id="apellido" name="apellido" placeholder="Apellido del estudiante" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="correo">Correo:</label>
+                        <input type="email" id="correo" name="correo" placeholder="correo@ejemplo.com" required>
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary">Guardar</button>
+                        <button type="button" class="btn btn-cancel" onclick="hideForm()">Cancelar</button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Tabla de estudiantes -->
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nombre</th>
+                        <th>Apellido</th>
+                        <th>Correo</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody id="estudiantesList">
+                </tbody>
+            </table>
         </div>
-        <div class="form-group">
-          <label>Correo:</label>
-          
-        </div>
-        Guardar
-        Cancelar
-      
     </div>
 
-    <h2>Lista de Estudiantes</h2>
-    <table class="table">
-      <thead>
-      <tr>
-        <th>ID</th>
-        <th>Nombre</th>
-        <th>Apellido</th>
-        <th>Correo</th>
-        <th>Acciones</th>
-      </tr>
-      </thead>
-      <tbody>
-      </tbody>
-    </table>
-  </div>
-</div>
+    <!-- Modal nota final -->
+    <div id="notaFinalModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeNotaFinalModal()">&times;</span>
+            <h2>Nota Final</h2>
+            <div id="notaFinalResult"></div>
+        </div>
+    </div>
 
-<div class="modal">
-  <div class="modal-content">
-    <span class="close">&#215;</span>
-    <h2>Nota Final</h2>
-    <p></p>
-  </div>
-</div>
+    <script src="/js/estudiante.js"></script>
+</body>
 
-
-
-<script type="module" src="https://s.brightspace.com/lib/bsi/2026.4.226/unbundled/mathjax.js"></script><script type="text/javascript">document.addEventListener('DOMContentLoaded', function() {
-					if (document.querySelector('math, .d2l-element, .d2l-cplus-layout') || /\$\$|\\\(|\\\[|\\begin{|\\ref{|\\eqref{/.test(document.body.innerHTML)) {
-						document.querySelectorAll('mspace[linebreak="newline"]').forEach(elm => {
-							elm.setAttribute('style', 'display: block; height: 0.5rem;');
-						});
-
-						document.querySelectorAll('math mmultiscripts > none').forEach(elm => {
-							const mrow = document.createElementNS('http://www.w3.org/1998/Math/MathML', 'mrow');
-							elm.replaceWith(mrow);
-						});
-
-						window.D2L.MathJax.loadMathJax({
-							outputScale: 1.5,
-							renderLatex: false,
-							enableMML3Support: false
-						});
-					}
-				});</script><script type="module" src="https://s.brightspace.com/lib/bsi/2026.4.226/unbundled/prism.js"></script><script type="text/javascript">document.addEventListener('DOMContentLoaded', function() {
-					document.querySelectorAll('.d2l-code').forEach(code => {
-						window.D2L.Prism.formatCodeElement(code, true);
-					});
-				});</script><script type="module" src="https://s.brightspace.com/lib/bsi/2026.4.226/unbundled/embeds.js"></script><script type="text/javascript">document.addEventListener('DOMContentLoaded', function() {
-					window.D2L.EmbedRenderer.renderEmbeds(document.body);
-				});</script></body></html>
+</html>
