@@ -20,7 +20,7 @@ public class EstudianteServicio {
     @Autowired
     private RepositorioNota repositorioNota;
 
-    // Obtener todos los estudiantes
+    // Obtener todos los estudiantes y convertirlos a DTO
     public List<EstudianteDTO> obtenerTodos() {
         return repositorioEstudiante.findAll()
                 .stream()
@@ -28,14 +28,14 @@ public class EstudianteServicio {
                 .collect(Collectors.toList());
     }
 
-    // Obtener estudiante por ID
+    // Obtener estudiante por ID, lanzar excepción si no existe
     public EstudianteDTO obtenerPorId(Long id) {
         Estudiante estudiante = repositorioEstudiante.findById(id)
                 .orElseThrow(() -> new RuntimeException("Estudiante no encontrado con id: " + id));
         return convertirADTO(estudiante);
     }
 
-    // Crear un nuevo estudiante
+    // Crear un nuevo estudiante validando unicidad de correo
     public EstudianteDTO crear(EstudianteDTO dto) {
         if (repositorioEstudiante.findByCorreo(dto.getCorreo()).isPresent()) {
             throw new RuntimeException("Ya existe un estudiante con el correo: " + dto.getCorreo());
@@ -48,7 +48,7 @@ public class EstudianteServicio {
         return convertirADTO(guardado);
     }
 
-    // Actualizar un estudiante existente
+    // Actualizar datos de estudiante y manejar conflicto de correo
     public EstudianteDTO actualizar(Long id, EstudianteDTO dto) {
         Estudiante estudiante = repositorioEstudiante.findById(id)
                 .orElseThrow(() -> new RuntimeException("Estudiante no encontrado con id: " + id));
@@ -67,7 +67,7 @@ public class EstudianteServicio {
         return convertirADTO(actualizado);
     }
 
-    // Eliminar un estudiante (también elimina sus notas por CascadeType.ALL)
+    // Eliminar estudiante; la anotación @Transactional garantiza consistencia al borrar en cascada
     @Transactional
     public void eliminar(Long id) {
         if (!repositorioEstudiante.existsById(id)) {
@@ -76,7 +76,7 @@ public class EstudianteServicio {
         repositorioEstudiante.deleteById(id);
     }
 
-    // Calcular nota final ponderada del estudiante
+    // Calcular nota final ponderada a partir de las notas del estudiante
     public double calcularNotaFinal(Long id) {
         if (!repositorioEstudiante.existsById(id)) {
             throw new RuntimeException("Estudiante no encontrado con id: " + id);
@@ -88,10 +88,11 @@ public class EstudianteServicio {
         double sumaPonderada = notas.stream()
                 .mapToDouble(n -> n.getValor() * n.getPorcentaje() / 100.0)
                 .sum();
+        // Redondear a 2 decimales
         return Math.round(sumaPonderada * 100.0) / 100.0;
     }
 
-    // Convertir entidad → DTO
+    // Convertir entidad → DTO (método privado de utilidad)
     private EstudianteDTO convertirADTO(Estudiante estudiante) {
         EstudianteDTO dto = new EstudianteDTO();
         dto.setId(estudiante.getId());

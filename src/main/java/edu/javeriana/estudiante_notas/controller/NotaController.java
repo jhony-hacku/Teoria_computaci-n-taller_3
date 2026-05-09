@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Map;
 
+// Controlador REST para manejar operaciones sobre las notas (CRUD)
+// Rutas bajo /api/notas y permite operaciones filtradas por estudiante.
 @RestController
 @RequestMapping("/api/notas")
 @CrossOrigin(origins = "*")
@@ -20,6 +22,7 @@ public class NotaController {
     private NotaService notaService;
 
     // GET /api/notas/estudiante/{estudianteId}
+    // Devuelve todas las notas asociadas a un estudiante (200) o 404 si no existe.
     @GetMapping("/estudiante/{estudianteId}")
     public ResponseEntity<?> obtenerPorEstudiante(@PathVariable Long estudianteId) {
         try {
@@ -32,6 +35,7 @@ public class NotaController {
     }
 
     // GET /api/notas/{id}
+    // Obtiene una nota por su id (200) o 404 si no se encuentra.
     @GetMapping("/{id}")
     public ResponseEntity<?> obtenerPorId(@PathVariable Long id) {
         try {
@@ -43,6 +47,7 @@ public class NotaController {
     }
 
     // POST /api/notas  (el body incluye estudianteId)
+    // Crea una nota para el estudiante indicado; valida estudianteId en el body.
     @PostMapping
     public ResponseEntity<?> crear(@Valid @RequestBody NotaDTO dto) {
         try {
@@ -59,6 +64,7 @@ public class NotaController {
     }
 
     // PUT /api/notas/{id}
+    // Actualiza una nota existente; retorna 400 si ocurren errores de validación.
     @PutMapping("/{id}")
     public ResponseEntity<?> actualizar(@PathVariable Long id, @Valid @RequestBody NotaDTO dto) {
         try {
@@ -71,6 +77,7 @@ public class NotaController {
     }
 
     // DELETE /api/notas/{id}
+    // Elimina una nota por id; retorna 204 o 404 si no existe.
     @DeleteMapping("/{id}")
     public ResponseEntity<?> eliminar(@PathVariable Long id) {
         try {

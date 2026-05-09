@@ -20,7 +20,7 @@ public class NotaService {
     @Autowired
     private RepositorioEstudiante repositorioEstudiante;
 
-    // Obtener todas las notas de un estudiante
+    // Obtener todas las notas de un estudiante; valida existencia del estudiante.
     public List<NotaDTO> obtenerNotasPorEstudiante(Long estudianteId) {
         if (!repositorioEstudiante.existsById(estudianteId)) {
             throw new RuntimeException("Estudiante no encontrado con id: " + estudianteId);
@@ -31,14 +31,14 @@ public class NotaService {
                 .collect(Collectors.toList());
     }
 
-    // Obtener nota por ID
+    // Obtener nota por ID (lanza excepción si no existe)
     public NotaDTO obtenerPorId(Long id) {
         Nota nota = repositorioNota.findById(id)
                 .orElseThrow(() -> new RuntimeException("Nota no encontrada con id: " + id));
         return convertirADTO(nota);
     }
 
-    // Crear una nota para un estudiante
+    // Crear una nota asociada a un estudiante existente
     public NotaDTO crear(Long estudianteId, NotaDTO dto) {
         Estudiante estudiante = repositorioEstudiante.findById(estudianteId)
                 .orElseThrow(() -> new RuntimeException("Estudiante no encontrado con id: " + estudianteId));
@@ -54,7 +54,7 @@ public class NotaService {
         return convertirADTO(guardada);
     }
 
-    // Actualizar una nota existente
+    // Actualizar una nota existente (no cambia el estudiante asociado)
     public NotaDTO actualizar(Long id, NotaDTO dto) {
         Nota nota = repositorioNota.findById(id)
                 .orElseThrow(() -> new RuntimeException("Nota no encontrada con id: " + id));
@@ -68,7 +68,7 @@ public class NotaService {
         return convertirADTO(actualizada);
     }
 
-    // Eliminar una nota
+    // Eliminar una nota por id
     public void eliminar(Long id) {
         if (!repositorioNota.existsById(id)) {
             throw new RuntimeException("Nota no encontrada con id: " + id);
@@ -76,7 +76,7 @@ public class NotaService {
         repositorioNota.deleteById(id);
     }
 
-    // Calcular promedio simple de un arreglo de notas
+    // Calcular promedio simple de un arreglo de notas (método utilitario)
     public double calcularPromedio(double[] notas) {
         if (notas == null || notas.length == 0) return 0.0;
         double suma = 0;

@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Map;
 
+// Controlador REST para operaciones CRUD sobre Estudiante y cálculo de nota final.
+// Responde en /api/estudiantes y maneja posibles errores retornando códigos HTTP adecuados.
 @RestController
 @RequestMapping("/api/estudiantes")
 @CrossOrigin(origins = "*")
@@ -20,12 +22,14 @@ public class EstudianteController {
     private EstudianteServicio estudianteServicio;
 
     // GET /api/estudiantes
+    // Devuelve la lista completa de estudiantes en formato DTO (200 OK).
     @GetMapping
     public ResponseEntity<List<EstudianteDTO>> obtenerTodos() {
         return ResponseEntity.ok(estudianteServicio.obtenerTodos());
     }
 
     // GET /api/estudiantes/{id}
+    // Busca un estudiante por id; si no existe retorna 404 con mensaje.
     @GetMapping("/{id}")
     public ResponseEntity<?> obtenerPorId(@PathVariable Long id) {
         try {
@@ -37,6 +41,7 @@ public class EstudianteController {
     }
 
     // POST /api/estudiantes
+    // Crea un nuevo estudiante; valida entrada y retorna 201 o 409 si correo ya existe.
     @PostMapping
     public ResponseEntity<?> crear(@Valid @RequestBody EstudianteDTO dto) {
         try {
@@ -49,6 +54,7 @@ public class EstudianteController {
     }
 
     // PUT /api/estudiantes/{id}
+    // Actualiza los datos de un estudiante existente; valida conflictos de correo.
     @PutMapping("/{id}")
     public ResponseEntity<?> actualizar(@PathVariable Long id, @Valid @RequestBody EstudianteDTO dto) {
         try {
@@ -61,6 +67,7 @@ public class EstudianteController {
     }
 
     // DELETE /api/estudiantes/{id}
+    // Elimina estudiante (y sus notas por cascade). Retorna 204 si fue exitoso.
     @DeleteMapping("/{id}")
     public ResponseEntity<?> eliminar(@PathVariable Long id) {
         try {
@@ -73,6 +80,7 @@ public class EstudianteController {
     }
 
     // GET /api/estudiantes/{id}/nota-final
+    // Calcula la nota final ponderada del estudiante; retorna 200 con la nota o 404 si no existe.
     @GetMapping("/{id}/nota-final")
     public ResponseEntity<?> calcularNotaFinal(@PathVariable Long id) {
         try {
